@@ -8,7 +8,7 @@ class InputField extends React.Component {
 		super(props);
 		this.state = { text: '' };
 
-		this.state = {histEnt: [], histSol: []};
+		this.state = {histEnt: '', histSol: ''};
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleClick = this.handleClick.bind(this);
@@ -19,12 +19,13 @@ class InputField extends React.Component {
 
 	handleChange(e) {
 		this.setState({text: e.target.value})
+		console.log(this.state.text)
 	}
 
 	handleClick(e) {
 		var entry = this.state.text;
 		var soln = eval(entry);
-
+		console.log(this.state.text)
 		//an array with the history of calcs
 
 		this.setState({
@@ -33,10 +34,6 @@ class InputField extends React.Component {
 		})
 		this.setState({ nums: this.state.histEnt.length })
 		this.setState({max: this.state.nums})
-		//console.log(this.state.nums)
-		//console.log(this.state.histEnt)
-		
-		//this.setState({input: entry}); //stores input
 
 		this.setState({solu: soln}); 
 	} 
