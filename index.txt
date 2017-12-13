@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+//import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
 class InputField extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = { text: '' };
+
 		this.state = {histEnt: '', histSol: ''};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -18,19 +19,13 @@ class InputField extends React.Component {
 
 	handleChange(e) {
 		this.setState({text: e.target.value})
-		//console.log(this.state.text)
+		console.log(this.state.text)
 	}
 
 	handleClick(e) {
 		var entry = this.state.text;
-
-		if (/[a-zA-Z]/.test(this.state.text)) {
-			return (
-				this.setState({ solu: "No Letters Please!"})
-			)
-		}
-
 		var soln = eval(entry);
+		console.log(this.state.text)
 		//an array with the history of calcs
 
 		this.setState({
@@ -38,18 +33,16 @@ class InputField extends React.Component {
 			histSol: [...this.state.histSol, soln]
 		})
 		this.setState({ nums: this.state.histEnt.length })
-		this.setState({max: this.state.histEnt.length})
-		console.log("max:" + this.state.max)
+		this.setState({max: this.state.nums})
 
 		this.setState({solu: soln}); 
-		console.log("array:" + this.state.histEnt)
 	} 
 
 	handleBack(e) {
 		let length = this.state.nums
-		console.log("length:" + length)
+		console.log(this.state.histEnt)
 
-		if(length > 0 ) {
+		if(length !== 0 ) {
 			length = length - 1
 			this.setState({ text: this.state.histEnt[length] })
 			this.setState({ solu: this.state.histSol[length] })
@@ -59,10 +52,9 @@ class InputField extends React.Component {
 
 	handleForward(e) {
 		let length = this.state.nums
-		console.log("length:" + length)
-		console.log("max forward:" + this.state.max)
+		console.log(this.state.histEnt)
 
-		if(length < this.state.max ) {
+		if(length !== this.state.max + 1 ) {
 			length = length + 1
 			this.setState({ text: this.state.histEnt[length] })
 			this.setState({ solu: this.state.histSol[length] })
@@ -72,21 +64,17 @@ class InputField extends React.Component {
 
 	render() {
 		return (
-			<div className="everything">
-				<div> 
-					<form action="#" className="items">
-						<input className="input" type="text" value={this.state.text}
-						 onChange={this.handleChange} placeholder="Gimme a problem!"/>
-						<button type="submit" onClick={this.handleClick} className="solve">
-							=
-						</button>
-					</form>
-						<Recall 
-							back={this.handleBack} 
-							forward={this.handleForward}
-						/>
-				</div>
-					<Answer solut={this.state.solu} />	
+			<div>
+				<input className="input" type="text" value={this.state.text}
+				 onChange={this.handleChange}/>
+				<button type="submit" onClick={this.handleClick}>
+					Solve
+				</button>
+				<Recall 
+					back={this.handleBack} 
+					forward={this.handleForward}
+				/>
+				<Answer solut={this.state.solu}/>
 			</div>
 		)
 	}
@@ -96,7 +84,7 @@ class Answer extends React.Component {
 	render() {
 		return (
 			<div>
-				<p className="solution" >{this.props.solut}</p>
+				<p>Solution: {this.props.solut}</p>
 			</div>
 		)
 	}
@@ -105,12 +93,12 @@ class Answer extends React.Component {
 class Recall extends React.Component {
 	render() {
 		return (
-			<span className="bfbuttons">
-				<button type="submit" onClick={this.props.back} value="back" className="back">
-					<img className="backImg" src="https://image.flaticon.com/icons/png/512/13/13964.png" alt="back"/>
+			<span>
+				<button type="submit" onClick={this.props.back} value="back">
+					Back
 				</button>
-				<button type="submit" onClick={this.props.forward} value="forward" className="forward">
-					<img className="fwdImg" src="https://image.flaticon.com/icons/png/512/13/13964.png" alt="back"/>
+				<button type="submit" onClick={this.props.forward} value="forward">
+					Forward 
 				</button>
 			</span>
 		)
