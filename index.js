@@ -117,9 +117,3 @@ class Recall extends React.Component {
 	}
 }
 
-ReactDOM.render(
-	<InputField/>,
- 	document.getElementById('root')
-);
-
-registerServiceWorker();
